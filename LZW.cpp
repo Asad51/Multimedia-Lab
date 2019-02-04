@@ -14,9 +14,14 @@ public:
 	void readDictionary(){
 		encodeDict.clear();
 		decodeDict.clear();
-		string str;
+		char ch, c;
 		int code;
-		while(dict >> str >>code){
+		while(dict >> ch >> noskipws){
+			dict >> c >> code;
+			dict >> c;
+			cout<< ch << code <<endl;
+			string str;
+			str += ch;
 			encodeDict[str] = code;
 			decodeDict[code] = str;
 		}
@@ -30,13 +35,15 @@ public:
 		int code = encodeDict.size();
 		char c;
 		string s;
-		text >> c;
+		text >> c >> noskipws;
 		s = c;
-		while(text >> c){  //noskipws;
+		while(text >> c ){
 			string tmp = s + c;
 	        if(encodeDict[tmp] != 0) 
 	        	s = tmp;
 	        else{
+	        	//cout<< c << " " <<code << " " << s << " " << encodeDict[s]<<endl;
+
 	            compressed << encodeDict[s]<<" ";
 	            encodeDict[tmp] = ++code;
 	            //cout << code <<" " << encodeDict[s]<<endl;
